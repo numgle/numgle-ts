@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/numgle/dataset/main/src/data.schema.json",
+  "title": "numgle-dataset",
+  "description": "The dataset of Numgle",
+  "type": "object",
+  "properties": {
+    "cho": {
+      "description": "Leading consonants(choseong)",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "jung": {
+      "description": "Medial vowels(jungseong)",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "jong": {
+      "description": "Trailing consonants(jongseong)",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cj": {
+      "description": "choseong + jungseong",
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "han": {
+      "description": "Korean alphabet(jamo) only",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "englishUpper": {
+      "description": "Uppercase of English",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "englishLower": {
+      "description": "Lowercase of English",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "number": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "special": {
+      "description": "Special letters",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "range": {
+      "description": "Range of each token",
+      "type": "object",
+      "properties": {
+        "completeHangul": {
+          "$ref": "https://raw.githubusercontent.com/numgle/dataset/main/src/range.schema.json"
+        },
+        "notCompleteHangul": {
+          "$ref": "https://raw.githubusercontent.com/numgle/dataset/main/src/range.schema.json"
+        },
+        "uppercase": {
+          "$ref": "https://raw.githubusercontent.com/numgle/dataset/main/src/range.schema.json"
+        },
+        "lowercase": {
+          "$ref": "https://raw.githubusercontent.com/numgle/dataset/main/src/range.schema.json"
+        },
+        "number": {
+          "$ref": "https://raw.githubusercontent.com/numgle/dataset/main/src/range.schema.json"
+        },
+        "special": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": ["completeHangul", "notCompleteHangul", "uppercase", "lowercase", "number", "special"]
+    }
+  },
+  "required": [
+    "cho",
+    "jung",
+    "jong",
+    "cj",
+    "han",
+    "englishUpper",
+    "englishLower",
+    "number",
+    "special",
+    "range"
+  ]
+}
