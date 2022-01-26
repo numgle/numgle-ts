@@ -1,7 +1,7 @@
 {
   "name": "numgle-ts",
   "version": "1.0.0",
-  "description": "넘어진 글자 ts",
+  "description": "타입스크립트만 사용한 넘글 구현체",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -2,7 +2,7 @@ import http from "http";
 
 import { isInRange, Data, fetchData } from "./data";
 
-const port = 3001;
+const port = 3000;
 let data: Data;
 
 (async () => {
