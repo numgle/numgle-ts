@@ -1,0 +1,16 @@
+{
+  "name": "numgle-ts",
+  "version": "1.0.0",
+  "description": "넘어진 글자 ts",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "넘글"
+  ],
+  "author": "이승훈",
+  "devDependencies": {
+    "@types/node": "^17.0.12"
+  }
+}
