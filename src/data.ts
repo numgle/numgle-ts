@@ -1,9 +1,11 @@
 import { fetch } from "./request";
 
-export type Range = {
+type Range = {
   start: number;
   end: number;
 };
+export const isInRange = (num: number, range: Range): boolean =>
+  num >= range.start && num <= range.end;
 export type Data = {
   cho: string[];
   jong: string[];

@@ -1,8 +1,8 @@
 import http from "http";
 
-import { Data, fetchData } from "./data";
+import { isInRange, Data, fetchData } from "./data";
 
-const port = 3000;
+const port = 3001;
 let data: Data;
 
 (async () => {
@@ -32,31 +32,15 @@ type SeparatedHangeul = {
 const getLetterType = (charCode: number): LETTER_TYPE => {
   if (isNaN(charCode) || charCode === 13 || charCode === 10 || charCode === 32)
     return LETTER_TYPE.empty;
-  else if (
-    charCode >= data.range.completeHangul.start &&
-    charCode <= data.range.completeHangul.end
-  )
+  else if (isInRange(charCode, data.range.completeHangul))
     return LETTER_TYPE.completeHangul;
-  else if (
-    charCode >= data.range.notCompleteHangul.start &&
-    charCode <= data.range.notCompleteHangul.end
-  )
+  else if (isInRange(charCode, data.range.notCompleteHangul))
     return LETTER_TYPE.notCompleteHangul;
-  else if (
-    charCode >= data.range.uppercase.start &&
-    charCode <= data.range.uppercase.end
-  )
+  else if (isInRange(charCode, data.range.uppercase))
     return LETTER_TYPE.englishUpper;
-  else if (
-    charCode >= data.range.lowercase.start &&
-    charCode <= data.range.lowercase.end
-  )
+  else if (isInRange(charCode, data.range.lowercase))
     return LETTER_TYPE.englishLower;
-  else if (
-    charCode >= data.range.number.start &&
-    charCode <= data.range.number.end
-  )
-    return LETTER_TYPE.number;
+  else if (isInRange(charCode, data.range.number)) return LETTER_TYPE.number;
   else if (data.range.special.indexOf(charCode))
     return LETTER_TYPE.specialLetter;
   else return LETTER_TYPE.unknown;
@@ -94,7 +78,6 @@ const combineHangeul = (chr: char): string => {
 const numglifyChar = (chr: char): string => {
   const charCode = chr.charCodeAt(0);
   const letterType = getLetterType(charCode);
-  let start;
 
   switch (letterType) {
     case LETTER_TYPE.empty:
@@ -104,20 +87,16 @@ const numglifyChar = (chr: char): string => {
       return combineHangeul(chr);
 
     case LETTER_TYPE.notCompleteHangul:
-      start = data.range.notCompleteHangul.start;
-      return data.han[charCode - start];
+      return data.han[charCode - data.range.notCompleteHangul.start];
 
     case LETTER_TYPE.englishUpper:
-      start = data.range.uppercase.start;
-      return data.englishUpper[charCode - start];
+      return data.englishUpper[charCode - data.range.uppercase.start];
 
     case LETTER_TYPE.englishLower:
-      start = data.range.lowercase.start;
-      return data.englishLower[charCode - start];
+      return data.englishLower[charCode - data.range.lowercase.start];
 
     case LETTER_TYPE.number:
-      start = data.range.number.start;
-      return data.number[charCode - start];
+      return data.number[charCode - data.range.number.start];
 
     case LETTER_TYPE.specialLetter:
       return data.special[data.range.special.indexOf(charCode)];
