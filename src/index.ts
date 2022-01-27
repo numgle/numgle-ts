@@ -5,16 +5,14 @@ import { isInRange, Data, fetchData } from "./data";
 const port = 3000;
 let data: Data;
 
-(async () => {
-  fetchData().then((json) => {
-    data = json as Data;
-  });
-})();
+fetchData().then((json) => {
+  data = <Data>json;
+});
 
 enum LETTER_TYPE {
   empty = 1,
-  completeHangul = 2,
-  notCompleteHangul = 3,
+  completeHangeul = 2,
+  notCompleteHangeul = 3,
   englishUpper = 4,
   englishLower = 5,
   number = 6,
@@ -33,9 +31,9 @@ const getLetterType = (charCode: number): LETTER_TYPE => {
   if (isNaN(charCode) || charCode === 13 || charCode === 10 || charCode === 32)
     return LETTER_TYPE.empty;
   else if (isInRange(charCode, data.range.completeHangul))
-    return LETTER_TYPE.completeHangul;
+    return LETTER_TYPE.completeHangeul;
   else if (isInRange(charCode, data.range.notCompleteHangul))
-    return LETTER_TYPE.notCompleteHangul;
+    return LETTER_TYPE.notCompleteHangeul;
   else if (isInRange(charCode, data.range.uppercase))
     return LETTER_TYPE.englishUpper;
   else if (isInRange(charCode, data.range.lowercase))
@@ -45,11 +43,11 @@ const getLetterType = (charCode: number): LETTER_TYPE => {
     return LETTER_TYPE.specialLetter;
   else return LETTER_TYPE.unknown;
 };
-const separateHangeul = (chr: number): SeparatedHangeul => {
+const separateHangeul = (charCode: number): SeparatedHangeul => {
   return {
-    cho: Math.floor((chr - 44032) / 28 / 21),
-    jung: Math.floor(((chr - 44032) / 28) % 21),
-    jong: Math.floor((chr - 44032) % 28),
+    cho: Math.floor((charCode - 44032) / 28 / 21),
+    jung: Math.floor(((charCode - 44032) / 28) % 21),
+    jong: Math.floor((charCode - 44032) % 28),
   };
 };
 const isInData = (separated: SeparatedHangeul): boolean => {
@@ -83,10 +81,10 @@ const numglifyChar = (chr: char): string => {
     case LETTER_TYPE.empty:
       return "";
 
-    case LETTER_TYPE.completeHangul:
+    case LETTER_TYPE.completeHangeul:
       return combineHangeul(chr);
 
-    case LETTER_TYPE.notCompleteHangul:
+    case LETTER_TYPE.notCompleteHangeul:
       return data.han[charCode - data.range.notCompleteHangul.start];
 
     case LETTER_TYPE.englishUpper:
