@@ -4,7 +4,7 @@
   "description": "타입스크립트만 사용한 넘글 구현체",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build",
     "start": "node dist/index.js"
   },
   "keywords": [
@@ -12,6 +12,7 @@
   ],
   "author": "이승훈",
   "devDependencies": {
+    "typescript": "^4.5.5",
     "@types/node": "^17.0.12"
   },
   "dependencies": {}
