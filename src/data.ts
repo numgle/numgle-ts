@@ -29,6 +29,6 @@ export type Data = {
 };
 export const fetchData = async (): Promise<Data> => {
   return (
-    fetch ? await fetch(`https://${dataURL}`) : await _fetch(dataURL)
+    !!global.fetch ? await fetch(`https://${dataURL}`) : await _fetch(dataURL)
   ).json();
 };
