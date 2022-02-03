@@ -8,7 +8,7 @@ const writeOptions = { "Content-Type": "text/html; charset=utf-8" };
 let data: Data;
 
 fetchData().then((json) => {
-  data = <Data>json;
+  data = json;
 });
 
 enum LETTER_TYPE {

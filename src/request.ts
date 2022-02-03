@@ -1,6 +1,12 @@
 import https from "https";
 
-export const fetch = <T>(url: string) => {
+type _Response = {
+  status: number;
+  text: () => Promise<string>;
+  json: () => Promise<any>;
+};
+
+export const _fetch = (url: string): Promise<_Response> => {
   return new Promise((resolve, reject) => {
     let raw = "";
     const request = https.request(
@@ -13,7 +19,11 @@ export const fetch = <T>(url: string) => {
           raw += chunk;
         });
         res.on("end", () => {
-          resolve(<T>JSON.parse(raw));
+          resolve({
+            status: res.statusCode!,
+            text: () => Promise.resolve(raw),
+            json: () => Promise.resolve(JSON.parse(raw)),
+          });
         });
       }
     );

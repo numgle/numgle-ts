@@ -1,4 +1,6 @@
-import { fetch } from "./request";
+import { _fetch } from "./request";
+
+const dataURL = "raw.githubusercontent.com/numgle/dataset/main/src/data.json";
 
 type Range = {
   start: number;
@@ -25,8 +27,8 @@ export type Data = {
     special: number[];
   };
 };
-export const fetchData = () => {
-  return fetch<Data>(
-    "raw.githubusercontent.com/numgle/dataset/main/src/data.json"
-  );
+export const fetchData = async (): Promise<Data> => {
+  return (
+    fetch ? await fetch(`https://${dataURL}`) : await _fetch(dataURL)
+  ).json();
 };
