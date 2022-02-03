@@ -3,6 +3,8 @@ import http from "http";
 import { isInRange, Data, fetchData } from "./data";
 
 const port = 3000;
+const writeOptions = { "Content-Type": "text/html; charset=utf-8" };
+
 let data: Data;
 
 fetchData().then((json) => {
@@ -56,7 +58,7 @@ const isInData = (separated: SeparatedHangeul): boolean => {
     return data.jung[separated.jung - 8] != "";
   else return data.cj[Math.min(8, separated.jung)][separated.cho] != "";
 };
-const combineHangeul = (chr: char): string => {
+const completeHangeul = (chr: char): string => {
   const separated = separateHangeul(chr.charCodeAt(0));
 
   if (!isInData(separated)) return "";
@@ -82,7 +84,7 @@ const numglifyChar = (chr: char): string => {
       return "";
 
     case LETTER_TYPE.completeHangeul:
-      return combineHangeul(chr);
+      return completeHangeul(chr);
 
     case LETTER_TYPE.notCompleteHangeul:
       return data.han[charCode - data.range.notCompleteHangul.start];
@@ -119,10 +121,10 @@ http
     );
 
     if (text) {
-      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      res.writeHead(200, writeOptions);
       res.end(text);
     } else {
-      res.writeHead(400, { "Content-Type": "text/html; charset=utf-8" });
+      res.writeHead(400, writeOptions);
       res.end(
         "잘못된 요청입니다. 필수 요청 인자가 누락되었습니다. /:넘어뜨릴 문자열"
       );
